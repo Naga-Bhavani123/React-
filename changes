@@ -1,0 +1,34 @@
+// Write your code here.
+
+import {Component} from 'react'
+import './index.css'
+
+class LettersCalculator extends Component {
+  state = {searchq: ''}
+
+  search = event => {
+    this.setState({searchq: event.target.value})
+  }
+
+  render() {
+    const {searchq} = this.state
+
+    const len = searchq.length
+    return (
+      <div>
+        <div>
+          <h1>Calculate the Letters you enter</h1>
+          <label for="in">Enter the phrase</label>
+          <input type="text" id="in" onchange={this.search} />
+          <p>No.of letters: {len}</p>
+        </div>
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/stop-watch-with-calculator-img.png"
+          alt="letters calculator"
+        />
+      </div>
+    )
+  }
+}
+
+export default LettersCalculator
