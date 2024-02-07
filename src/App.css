@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bg {
+  height: 100vh;
+}
+
+.NavBar {
+  padding: 10px;
+  width: 100%;
+  background-color: #3367d6;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navImage {
+  width: 70px;
+  height: 30px;
+}
+
+.searchLogo {
+  height: 40px;
+  width: 50px;
+  background-color: #2850a7;
+  border: 2px solid #6697ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 15px;
+  height: 20px;
+}
+
+.input {
+  height: 40px;
+  width: 60%;
+  background-color: #2850a7;
+  border: 2px solid #6697ff;
+  color: black;
+  outline: none;
+  font-size: 25px;
+}
+
+.searchCart {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  padding-right: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.UnList {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  width: 80%;
+  border-radius: 20px;
+}
