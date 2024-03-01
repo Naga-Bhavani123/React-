@@ -1,0 +1,332 @@
+Appointments Component................................................................
+// Write your code here
+
+import {Component} from 'react'
+import {format} from 'date-fns'
+import {v4} from 'uuid'
+import './index.css'
+import AppointmentItem from '../AppointmentItem'
+
+class Appointments extends Component {
+  state = {name: '', date: '', appointments: [], wantStarred: false}
+
+  addAppointment = event => {
+    event.preventDefault()
+    this.setState(prvState => {
+      const {name, date, appointments} = prvState
+      const newD = format(new Date(date), 'dd MMMM yyyy, EEEE')
+      const obj = {name, date: newD, id: v4(), important: false}
+      console.log(obj)
+      const newObj = [...appointments, obj]
+      return {name: '', date: '', appointments: newObj}
+    })
+  }
+
+  makeImpointment = id => {
+    this.setState(prvState => {
+      const {appointments} = prvState
+      const newAppoint = appointments.map(ele => {
+        const idEle = ele.id
+        return id === idEle ? {...ele, important: !ele.important} : {...ele}
+      })
+      return {appointments: newAppoint}
+    })
+  }
+
+  onName = event => {
+    const value1 = event.target.value
+    this.setState({name: value1})
+  }
+
+  onDate = event => {
+    const value1 = event.target.value
+    this.setState({date: value1})
+  }
+
+  isStarred = () => {
+    this.setState(prvState => {
+      const newA = !prvState.wantStarred
+      console.log(newA)
+      return {wantStarred: newA}
+    })
+  }
+
+  render() {
+    const {name, date, appointments, wantStarred} = this.state
+
+    let UpdatedAppointments
+
+    if (wantStarred) {
+      UpdatedAppointments = appointments.filter(ele => ele.important)
+    } else {
+      UpdatedAppointments = appointments
+    }
+
+    return (
+      <div className="bg">
+        <div className="con">
+          <h1 className="mainHeading">Add Appointment</h1>
+          <div className="topCon">
+            <div className="formCon">
+              <label htmlFor="TITLE" className="labels">
+                title
+              </label>
+
+              <input
+                id="TITLE"
+                className="inputElements"
+                type="text"
+                value={name}
+                onChange={this.onName}
+              />
+              <br />
+              <label htmlFor="TITLE1" className="labels">
+                date
+              </label>
+
+              <input
+                id="TITLE1"
+                className="inputElements"
+                type="date"
+                value={date}
+                onChange={this.onDate}
+              />
+              <br />
+              <button
+                className="buttonAdd"
+                type="button"
+                onClick={this.addAppointment}
+              >
+                Add
+              </button>
+            </div>
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/appointments-app/appointments-img.png"
+              alt="appointments"
+              className="topImage"
+            />
+          </div>
+          <hr />
+          <div className="secondCon">
+            <h1 className="mainHeading">Appointments</h1>
+            <button
+              type="button"
+              onClick={this.isStarred}
+              className="starredButton"
+            >
+              Starred
+            </button>
+          </div>
+          <ul className="AppointmentCon">
+            {UpdatedAppointments.map(ele => (
+              <AppointmentItem
+                Item={ele}
+                key={ele.id}
+                func={this.makeImpointment}
+              />
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default Appointments
+
+CSS............................
+/* Write your CSS here */
+
+.bg {
+  background-image: linear-gradient(to bottom, #9796f0, #fbc7d4);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.con {
+  background-color: #ffffff;
+  min-width: 80%;
+  padding: 20px;
+
+  border-radius: 25px;
+}
+
+.topCon {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainHeading {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.formCon {
+  display: flex;
+  flex-direction: column;
+  order: 2;
+}
+
+.labels {
+  color: grey;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.inputElements {
+  width: 100%;
+  height: 50px;
+  padding: 3px;
+  font-size: 18px;
+}
+
+.buttonAdd {
+  border: none;
+  border-radius: 5px;
+  padding: 7px 10px;
+  background-color: blue;
+  align-self: flex-start;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.topImage {
+  width: 100%;
+  margin-top: 10px;
+  order: 1;
+}
+
+.horiLine {
+  border: 3px solid grey;
+}
+
+.secondCon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.starredButton {
+  border: 1px solid blue;
+  transition: 3s;
+  background-color: transparent;
+  color: blue;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 15px;
+  padding: 5px 15px;
+}
+
+.starredButton:hover {
+  background-color: blue;
+  color: white;
+}
+
+.AppointmentCon {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+}
+
+@media (min-width: 768px) {
+  .con {
+    padding: 50px;
+  }
+  .topCon {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .formCon {
+    order: 1;
+    width: 40%;
+  }
+  .topImage {
+    order: 2;
+    width: 40%;
+    margin-bottom: 20px;
+  }
+}
+
+
+
+
+AppointmentItem......................................................................................................
+
+// Write your code here
+
+import './index.css'
+
+const AppointmentItem = props => {
+  const {func, Item} = props
+  const {name, date, id, important} = Item
+  const url = important
+    ? 'https://assets.ccbp.in/frontend/react-js/appointments-app/filled-star-img.png'
+    : 'https://assets.ccbp.in/frontend/react-js/appointments-app/star-img.png'
+  const fun = () => func(id)
+
+  return (
+    <li className="ApointCon">
+      <div className="topApponintCon">
+        <p className="nameAppointCon">{name}</p>
+        <button
+          className="buttonIcon"
+          type="button"
+          data-testid="star"
+          onClick={fun}
+        >
+          <img src={url} alt="star" />
+        </button>
+      </div>
+      <p className="dateAppointCon">{date}</p>
+    </li>
+  )
+}
+
+export default AppointmentItem
+
+css...............................................................................................................
+/* Write your CSS here */
+
+.ApointCon {
+  width: 250px;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: white;
+  border: 2px solid #808080;
+  margin-right: 10px;
+  list-style-type: none;
+}
+
+.topApponintCon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nameAppointCon {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.dateAppointCon {
+  color: grey;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.buttonIcon {
+  border: none;
+  background-color: transparent;
+}
